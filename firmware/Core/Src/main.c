@@ -6,7 +6,7 @@
   ******************************************************************************
   ** This notice applies to any and all portions of this file
   * that are not between comment pairs USER CODE BEGIN and
-  * USER CODE END. Other portions of this file, whether 
+  * USER CODE END. Other portions of this file, whether
   * inserted by the user or by software development tools
   * are owned by their respective copyright owners.
   *
@@ -120,7 +120,7 @@ int main(void)
 
   /* Configure the system clock */
   SystemClock_Config();
- 
+
   /* USER CODE BEGIN SysInit */
 
   /* USER CODE END SysInit */
@@ -133,35 +133,35 @@ int main(void)
   MX_TIM3_Init();
   MX_TIM14_Init();
   /* USER CODE BEGIN 2 */
-	HAL_ADC_Start_DMA(&hadc, (uint32_t *)ADC1_DMA_Buffer, 3);
-	HAL_ADC_Start(&hadc);
-	HAL_TIM_Base_Start_IT(&htim3);
-	HAL_TIM_PWM_Start(&htim14, TIM_CHANNEL_1);
-	EEPROM_Read();
-	HeaterTurnOff();
+  HAL_ADC_Start_DMA(&hadc, (uint32_t *)ADC1_DMA_Buffer, 3);
+  HAL_ADC_Start(&hadc);
+  HAL_TIM_Base_Start_IT(&htim3);
+  HAL_TIM_PWM_Start(&htim14, TIM_CHANNEL_1);
+  EEPROM_Read();
+  HeaterTurnOff();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-		uint32_t CurrentTime = HAL_GetTick();
-		
-		if(ADC1_Successful) {
-			ADC1_Successful = 0;
-			AnalogButtonUpdate();
-			MeasureThermocoupleOutput();
-		}
-		
-		if(CurrentTime >= PreviousTime) {
-			PreviousTime  = CurrentTime + 500;
-			OneSecond ^= 1;
-			HeaterUpdate();
-			DisplayUpdate();
-		}
-		
-		HeaterSwitch();
-		BuzzerUpdate();
+    uint32_t CurrentTime = HAL_GetTick();
+
+    if (ADC1_Successful) {
+      ADC1_Successful = 0;
+      AnalogButtonUpdate();
+      MeasureThermocoupleOutput();
+    }
+
+    if (CurrentTime >= PreviousTime) {
+      PreviousTime  = CurrentTime + 500;
+      OneSecond ^= 1;
+      HeaterUpdate();
+      DisplayUpdate();
+    }
+
+    HeaterSwitch();
+    BuzzerUpdate();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
@@ -178,9 +178,9 @@ void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /**Initializes the CPU, AHB and APB busses clocks 
+  /**Initializes the CPU, AHB and APB busses clocks
   */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI|RCC_OSCILLATORTYPE_HSI14;
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI | RCC_OSCILLATORTYPE_HSI14;
   RCC_OscInitStruct.HSIState = RCC_HSI_ON;
   RCC_OscInitStruct.HSI14State = RCC_HSI14_ON;
   RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
@@ -193,10 +193,10 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
-  /**Initializes the CPU, AHB and APB busses clocks 
+  /**Initializes the CPU, AHB and APB busses clocks
   */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1;
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK | RCC_CLOCKTYPE_SYSCLK
+                                | RCC_CLOCKTYPE_PCLK1;
   RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
   RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
@@ -224,7 +224,7 @@ static void MX_ADC_Init(void)
   /* USER CODE BEGIN ADC_Init 1 */
 
   /* USER CODE END ADC_Init 1 */
-  /**Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion) 
+  /**Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */
   hadc.Instance = ADC1;
   hadc.Init.ClockPrescaler = ADC_CLOCK_ASYNC_DIV1;
@@ -244,7 +244,7 @@ static void MX_ADC_Init(void)
   {
     Error_Handler();
   }
-  /**Configure for the selected ADC regular channel to be converted. 
+  /**Configure for the selected ADC regular channel to be converted.
   */
   sConfig.Channel = ADC_CHANNEL_0;
   sConfig.Rank = ADC_RANK_CHANNEL_NUMBER;
@@ -253,14 +253,14 @@ static void MX_ADC_Init(void)
   {
     Error_Handler();
   }
-  /**Configure for the selected ADC regular channel to be converted. 
+  /**Configure for the selected ADC regular channel to be converted.
   */
   sConfig.Channel = ADC_CHANNEL_1;
   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
   {
     Error_Handler();
   }
-  /**Configure for the selected ADC regular channel to be converted. 
+  /**Configure for the selected ADC regular channel to be converted.
   */
   sConfig.Channel = ADC_CHANNEL_2;
   if (HAL_ADC_ConfigChannel(&hadc, &sConfig) != HAL_OK)
@@ -268,7 +268,7 @@ static void MX_ADC_Init(void)
     Error_Handler();
   }
   /* USER CODE BEGIN ADC_Init 2 */
-	HAL_ADCEx_Calibration_Start(&hadc);
+  HAL_ADCEx_Calibration_Start(&hadc);
   /* USER CODE END ADC_Init 2 */
 
 }
@@ -374,7 +374,7 @@ static void MX_TIM14_Init(void)
 
   /* USER CODE BEGIN TIM14_Init 1 */
   // 16Mhz / 64 = 250KHz = 4us
-	// PWM freq = 10Hz = 100ms
+  // PWM freq = 10Hz = 100ms
   /* USER CODE END TIM14_Init 1 */
   htim14.Instance = TIM14;
   htim14.Init.Prescaler = 63;
@@ -405,10 +405,10 @@ static void MX_TIM14_Init(void)
 
 }
 
-/** 
+/**
   * Enable DMA controller clock
   */
-static void MX_DMA_Init(void) 
+static void MX_DMA_Init(void)
 {
   /* DMA controller clock enable */
   __HAL_RCC_DMA1_CLK_ENABLE();
@@ -438,8 +438,8 @@ static void MX_GPIO_Init(void)
   HAL_GPIO_WritePin(BUZZER_GPIO_Port, BUZZER_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(GPIOA, DIG0_Pin|DIG1_Pin|LATCH_Pin|DIG2_Pin 
-                          |DIG3_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOA, DIG0_Pin | DIG1_Pin | LATCH_Pin | DIG2_Pin
+                    | DIG3_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin : PNP_SW_Pin */
   GPIO_InitStruct.Pin = PNP_SW_Pin;
@@ -454,10 +454,10 @@ static void MX_GPIO_Init(void)
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
   HAL_GPIO_Init(BUZZER_GPIO_Port, &GPIO_InitStruct);
 
-  /*Configure GPIO pins : DIG0_Pin DIG1_Pin LATCH_Pin DIG2_Pin 
+  /*Configure GPIO pins : DIG0_Pin DIG1_Pin LATCH_Pin DIG2_Pin
                            DIG3_Pin */
-  GPIO_InitStruct.Pin = DIG0_Pin|DIG1_Pin|LATCH_Pin|DIG2_Pin 
-                          |DIG3_Pin;
+  GPIO_InitStruct.Pin = DIG0_Pin | DIG1_Pin | LATCH_Pin | DIG2_Pin
+                        | DIG3_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
@@ -467,22 +467,22 @@ static void MX_GPIO_Init(void)
 
 /* USER CODE BEGIN 4 */
 void HAL_ADC_ConvCpltCallback(ADC_HandleTypeDef* hadc) {
-	static uint8_t ADC1Sampales = 0;
-	ADC1_Sampels[ADC1_Channel_1] += ADC1_DMA_Buffer[ADC1_Channel_1];
-	ADC1_Sampels[ADC1_Channel_2] += ADC1_DMA_Buffer[ADC1_Channel_2];
-	ADC1_Sampels[ADC1_Channel_3] += ADC1_DMA_Buffer[ADC1_Channel_3];
-	
-	if(++ADC1Sampales >= ADCn_MAX_SAMPLES) {
-		ADC1Sampales = 0;
-		ADC1_Result[ADC1_Channel_1] = ADC1_Sampels[ADC1_Channel_1];
-		ADC1_Result[ADC1_Channel_2] = ADC1_Sampels[ADC1_Channel_2];
-		ADC1_Result[ADC1_Channel_3] = ADC1_Sampels[ADC1_Channel_3];
-		ADC1_Sampels[ADC1_Channel_1] = 0;
-		ADC1_Sampels[ADC1_Channel_2] = 0;
-		ADC1_Sampels[ADC1_Channel_3] = 0;
-		ADC1_Successful = 1;
-	}
-	hadc->Instance->CR |= ADC_CR_ADSTART;
+  static uint8_t ADC1Sampales = 0;
+  ADC1_Sampels[ADC1_Channel_1] += ADC1_DMA_Buffer[ADC1_Channel_1];
+  ADC1_Sampels[ADC1_Channel_2] += ADC1_DMA_Buffer[ADC1_Channel_2];
+  ADC1_Sampels[ADC1_Channel_3] += ADC1_DMA_Buffer[ADC1_Channel_3];
+
+  if (++ADC1Sampales >= ADCn_MAX_SAMPLES) {
+    ADC1Sampales = 0;
+    ADC1_Result[ADC1_Channel_1] = ADC1_Sampels[ADC1_Channel_1];
+    ADC1_Result[ADC1_Channel_2] = ADC1_Sampels[ADC1_Channel_2];
+    ADC1_Result[ADC1_Channel_3] = ADC1_Sampels[ADC1_Channel_3];
+    ADC1_Sampels[ADC1_Channel_1] = 0;
+    ADC1_Sampels[ADC1_Channel_2] = 0;
+    ADC1_Sampels[ADC1_Channel_3] = 0;
+    ADC1_Successful = 1;
+  }
+  hadc->Instance->CR |= ADC_CR_ADSTART;
 }
 
 
@@ -509,7 +509,7 @@ void Error_Handler(void)
   * @retval None
   */
 void assert_failed(char *file, uint32_t line)
-{ 
+{
   /* USER CODE BEGIN 6 */
   /* User can add his own implementation to report the file name and line number,
      tex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */

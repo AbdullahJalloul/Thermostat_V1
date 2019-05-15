@@ -2,18 +2,15 @@
 #include "Config.h"
 #include "AnalogButtons.h"
 
-
-
-
 uint16_t ButtonStartTime;
 
 extern uint32_t ADC1_Result[3];
 
 BUTTON_t buttons[MAX_BUTTONS] = {
-	{ BUTTON_STATE_START, 51136, 51236,  NULL         , &btnPowerPressed  },
-	{ BUTTON_STATE_START, 25512, 25612, &btnSelectHold, &btnSelectPressed },
-	{ BUTTON_STATE_START, 16981, 17081, &btnDownHold  , &btnDownPressed   },
-	{ BUTTON_STATE_START, 12716, 12816, &btnUpHold    , &btnUpPressed     }
+  { BUTTON_STATE_START, 51136, 51236,  NULL         , &btnPowerPressed  },
+  { BUTTON_STATE_START, 25512, 25612, &btnSelectHold, &btnSelectPressed },
+  { BUTTON_STATE_START, 16981, 17081, &btnDownHold  , &btnDownPressed   },
+  { BUTTON_STATE_START, 12716, 12816, &btnUpHold    , &btnUpPressed     }
 };
 
 //******************************************************************************
@@ -34,18 +31,18 @@ void AnalogButtonUpdate(void) {
       if (buttons[i].State == BUTTON_STATE_PRESSED) {
         if (now > (ButtonStartTime + BUTTON_LONG_PRESS_TIME)) {
           if (buttons[i].PressLong != NULL) buttons[i].PressLong();
-					ButtonStartTime = now;
+          ButtonStartTime = now;
           buttons[i].State = BUTTON_STATE_WAITRELEASE;
         }
       }
-			else if(buttons[i].State == BUTTON_STATE_WAITRELEASE) {
-				if (now > (ButtonStartTime + BUTTON_LONG_REPET_TIME)) {
-					if (buttons[i].PressLong != NULL) {
-						if(i != BUTTON_SELECT) buttons[i].PressLong();
-					}
-					ButtonStartTime = now;
-				}
-			}
+      else if (buttons[i].State == BUTTON_STATE_WAITRELEASE) {
+        if (now > (ButtonStartTime + BUTTON_LONG_REPET_TIME)) {
+          if (buttons[i].PressLong != NULL) {
+            if (i != BUTTON_SELECT) buttons[i].PressLong();
+          }
+          ButtonStartTime = now;
+        }
+      }
     }
     else if (buttons[i].State == BUTTON_STATE_PRESSED) {
       if ( now > (ButtonStartTime + BUTTON_NORMAL_PRESS_TIME) ) {
