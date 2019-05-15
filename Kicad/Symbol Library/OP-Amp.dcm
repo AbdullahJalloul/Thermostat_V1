@@ -1,0 +1,8 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP GS8331
+D 350KHZ Zero-Drift CMOS Rail-to-Rail IO Opamp with RF Filter, Rail-to-Rail Input / Output ,  Gain-Bandwidth Product: 350KHz (Typ. @25°C) , Low Input Bias Current: 20pA (Typ. @25°C) , Low Offset Voltage: 10uV (Max. @25°C), Zero Drift: 0.05µV/°C (Max.)  
+K single opamp
+$ENDCMP
+#
+#End Doc Library

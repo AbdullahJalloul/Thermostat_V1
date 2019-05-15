@@ -1,0 +1,7 @@
+EESchema-DOCLIB  Version 2.0
+#
+$CMP MP2467
+D 2.5A, 36V, 500kHz Step-Down Converter
+$ENDCMP
+#
+#End Doc Library
